@@ -2,7 +2,8 @@
 
 import BentoGrid from "@/components/BentoGrid";
 import BentoItem from "@/components/BentoItem";
-import { Coffee, Github, Terminal, Info, Activity } from "lucide-react";
+import LiveBrewStatus from "@/components/LiveBrewStatus";
+import { Github, Terminal, Info } from "lucide-react";
 
 export default function Home() {
   return (
@@ -32,35 +33,7 @@ export default function Home() {
           delay={0.1}
           className="group"
         >
-          <div className="p-8 h-full flex flex-col bg-white">
-            <div className="flex justify-between items-start mb-8">
-              <div>
-                <div className="flex items-center gap-2 mb-1">
-                  <div className="h-1.5 w-1.5 rounded-full bg-accent-blue animate-pulse" />
-                  <h3 className="text-[10px] font-bold uppercase tracking-wider text-stone-400">
-                    Live Telemetry
-                  </h3>
-                </div>
-                <h2 className="text-3xl font-light text-stone-800 tracking-tight">
-                  Live Brew Status
-                </h2>
-              </div>
-              <Coffee className="w-6 h-6 text-stone-200 group-hover:text-accent-coffee transition-colors duration-500" />
-            </div>
-            
-            <div className="flex-1 rounded-2xl bg-stone-50 border border-divider/40 overflow-hidden relative group-hover:border-accent-blue/20 transition-colors duration-500">
-              <div className="absolute inset-0 flex items-center justify-center">
-                <div className="text-center">
-                  <Activity className="w-8 h-8 text-stone-200 mb-3 mx-auto" strokeWidth={1} />
-                  <p className="text-stone-300 text-xs font-light tracking-wide italic">
-                    Waiting for brewing data...
-                  </p>
-                </div>
-              </div>
-              {/* Subtle grid pattern for tech feel */}
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/grid-me.png')]" />
-            </div>
-          </div>
+          <LiveBrewStatus />
         </BentoItem>
 
         {/* Side (Medium): Barista Console */}
