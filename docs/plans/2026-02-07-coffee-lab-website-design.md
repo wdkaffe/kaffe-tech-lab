@@ -2,7 +2,7 @@
 
 ## 1. 視覺身份與佈局 (Visual Identity & Layout)
 
-*   **設計風格**：日式極簡 (Zen Tech) + 動態 Bento Grid。
+*   **設計風格**：日式極簡 (Kaffe Tech) + 動態 Bento Grid。
 *   **配色方案**：
     *   背景：`#F9F9F9` (純淨白)。
     *   分界：`#E0E0E0` (石材灰)。
