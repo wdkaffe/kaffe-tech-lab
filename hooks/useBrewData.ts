@@ -2,69 +2,40 @@ import { useState, useEffect } from 'react';
 
 export interface BrewData {
   temperature: number;
-  time: number; // in seconds
+  time: string;
   yield: number;
-  flowRate: number;
-  isBrewing: boolean;
+  status: string;
+  beanName: string;
 }
 
 export function useBrewData() {
-  const [data, setData] = useState<BrewData>({
-    temperature: 92.5,
-    time: 0,
-    yield: 0,
-    flowRate: 0,
-    isBrewing: false,
-  });
+  const [data, setData] = useState<BrewData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    let interval: NodeJS.Timeout;
-
-    if (data.isBrewing) {
-      interval = setInterval(() => {
-        setData((prev) => {
-          // Simulation logic
-          if (prev.time >= 300) { // Stop after 5 minutes
-            return { ...prev, isBrewing: false, flowRate: 0 };
-          }
-
-          const newTime = prev.time + 1;
-          // Slowly increase yield, fluctuate flow rate
-          const flowVariation = Math.random() * 0.4 - 0.2;
-          const newFlowRate = Math.max(0, 2.2 + flowVariation);
-          const newYield = prev.yield + newFlowRate;
-          
-          // Temperature fluctuates slightly
-          const tempVariation = Math.random() * 0.2 - 0.1;
-          const newTemp = Math.max(90, Math.min(95, prev.temperature + tempVariation));
-
-          return {
-            temperature: newTemp,
-            time: newTime,
-            yield: newYield,
-            flowRate: newFlowRate,
-            isBrewing: true,
-          };
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/data/brew.json');
+        const json = await response.json();
+        setData({
+          temperature: json.parameters.temperature,
+          time: json.parameters.time,
+          yield: json.parameters.yield,
+          status: json.status,
+          beanName: json.currentBean.name
         });
-      }, 1000);
-    }
+      } catch (error) {
+        console.error('Error fetching brew data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
+    fetchData();
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
-  }, [data.isBrewing]);
+  }, []);
 
-  const startBrewing = () => {
-    setData({
-      temperature: 92.5,
-      time: 0,
-      yield: 0,
-      flowRate: 0,
-      isBrewing: true,
-    });
-  };
-
-  const stopBrewing = () => {
-    setData((prev) => ({ ...prev, isBrewing: false, flowRate: 0 }));
-  };
-
-  return { data, startBrewing, stopBrewing };
+  return { data, loading };
 }

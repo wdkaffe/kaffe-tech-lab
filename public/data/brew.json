@@ -1,0 +1,15 @@
+{
+  "lastUpdate": "2026-02-07T13:10:00Z",
+  "status": "Ready to Brew",
+  "currentBean": {
+    "name": "Panama Finca Barbara",
+    "process": "Washed",
+    "varietal": "Catuai"
+  },
+  "parameters": {
+    "temperature": 92.5,
+    "yield": 36.2,
+    "time": "02:15",
+    "ratio": "1:15"
+  }
+}
